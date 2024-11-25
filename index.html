@@ -1,120 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mad Lib</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mad Libs</title>
+    <!-- <style>
+      /* CSS styles */
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+    </style> -->
     <style>
-       
-
-    * {
+      /* CSS styles */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
-        font-family: 'Courier New', monospace;
-    }
-    
-    body {
-        background-color: #f0f8ff;
         color: #333;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 150vh;
-        padding: 25px;
-    }
-    
-    h1 {
-        font-size: 3em;
-        margin-bottom: 18px;
-        color: #152ed1;
-        text-align: center; 
-    }
-    
-    form {
-        display: flex;
-        flex-direction: column;
-        width: 340px;
-        padding: 30px;
-        border: 4px solid #11d0c3;
-        border-radius: 25px;
+      }
+
+      .container {
+        max-width: 600px;
+        margin-top: 80px;
+        margin-left: 400px;
+        padding: 20px;
         background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    
-    label {
-        font-size: 1em;
-        color: #333;
-        margin-top: 10px;
-    }
-    
-    input[type="text"] {
-        width: 100%;
-        padding: 8px;
-        margin-top: 5px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #16d339;
+      }
+
+      form {
+        margin-top: 20px;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"],
+      select {
+        width: 80%;
+        padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
-        font-size: 1em;
-    }
-    
-    button[type="submit"] {
-        margin-top: 20px;
-        padding: 10px;
-        font-size: 1em;
+        margin-bottom: 10px;
+      }
+
+      button[type="submit"],
+      button {
+        padding: 10px 20px;
+        background-color: #3dbe12;
         color: #fff;
-        background-color: #cf0505;
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    
-    button[type="submit"]:hover {
-        background-color: #9c1ac8;
-    }
-    
-    footer {
-        margin-top: 20px;
-        font-size: 0.9em;
-        color: #666;
-    }
-    
-    footer span {
-        color: #333;
-        font-weight: bold;
-    }
-    </style>
-    
-</head>
-<body>
-    <h1>Fill in the Mad Lib</h1>
-    <form action="/ITC505/lab-7" method="POST">
-        <label>Plural Noun:
-            <input type="text" name="pluralNoun" required>
-        </label>
-        <label>Adjective:
-            <input type="text" name="adjective" required>
-        </label>
-        <label>Verb:
-            <input type="text" name="verb" required>
-        </label>
-        <label>Color:
-            <input type="text" name="color" required>
-        </label>
-        <label>Animal:
-            <input type="text" name="animal" required>
-        </label>
-        <button type="submit">Submit</button>
-    </form>
+      }
 
-    <footer>
-        <p>Last updated: 
-            <span id="lastModified"></span>
-        </p>
-    </footer>
+      button[type="submit"]:hover,
+      button:hover {
+        background-color: #07ba34;
+      }
+
+      #sentence {
+        margin-top: 20px;
+        display: none;
+      }
+
+      #madLibsSentence {
+        font-style: italic;
+      }
+
+      footer {
+        margin-top: 20px;
+        text-align: center;
+        color: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Mad Libs</h1>
+      <form id="madLibsForm">
+        <div class="form-group">
+          <label for="noun">Name:</label>
+          <input type="text" id="noun" name="noun" required />
+        </div>
+        <div class="form-group">
+          <label for="adjective">Qualities:</label>
+          <select id="adjective" name="adjective" required>
+            <option value="">Select a quality</option>
+            <option value="Honest">Honest</option>
+            <option value="Confidence">Confidence</option>
+            <option value="creativity">creativity</option>
+            <option value="Loyalty">Loyalty</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="verb">Fond Memories:</label>
+          <input type="text" id="verb" name="verb" required />
+        </div>
+        <div class="form-group">
+          <label for="emotion">Emotion:</label>
+          <select id="emotion" name="emotion" required>
+            <option value="">Select an emotion</option>
+            <option value="Sadness">Sadness</option>
+            <option value="Anger">Anger</option>
+            <option value="Fear">Fear</option>
+            <option value="Surprise">Surprise</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="place">Place:</label>
+          <input type="text" id="place" name="place" required />
+        </div>
+        <button type="submit">Generate Story</button>
+      </form>
+      <p>Addendum:</p>
+      <ul>
+        <li>
+          As a first step, I have designed an entire HTML code and applied
+          styling to that, and then I have implemented a javascript script to
+          perform various operations. When I click the generation button, it
+          should generate a story based on the inputs I provide, and if I click
+          the back button, it should take me back to the previous form.
+        </li>
+        <li>
+          As a next step, I ran the whole setup on my local computer. The
+          purpose of this test is to see if it is functioning as intended.
+        </li>
+        <li>
+          The second step in running the entire code on a node.js server is to
+          install a npm package.
+        </li>
+        <li>
+          Using this "/ITC505/Lab-7", a route is created that responds with
+          "index.html" in the "public" directory in the server.js.
+        </li>
+        <li>
+          In the end, it would be helpful to run the command "node server.js"
+          and navigate to the following URL: When we enter
+          "http://localhost:8080/ITC505/Lab-7," we receive the exact output
+          described above and expected.
+        </li>
+      </ul>
+      <div id="sentence" style="display: none">
+        <h3>Generated Story:</h3>
+        <p id="madLibsSentence"></p>
+        <button onclick="goBack()">Back</button>
+      </div>
+    </div>
+
     <script>
-        var x = document.lastModified;
-        document.getElementById('lastModified').textContent = x;
+      function generateSentence(event) {
+        event.preventDefault();
+
+        const noun = document.getElementById("noun").value;
+        const adjective = document.getElementById("adjective").value;
+        const verb = document.getElementById("verb").value;
+        const emotion = document.getElementById("emotion").value;
+        const place = document.getElementById("place").value;
+
+        const sentence = `Hi, I am ${noun} Here is my story, In a ${place} , their eyes met, sparking a connection. He admired her ${adjective}, she cherished his supportive nature. Together, they created beautiful memories ${verb} , filling their hearts with ${emotion}`;
+
+        document.getElementById("madLibsSentence").innerText = sentence;
+        document.getElementById("madLibsForm").style.display = "none";
+        document.getElementById("sentence").style.display = "block";
+      }
+
+      function goBack() {
+        document.getElementById("madLibsForm").reset();
+        document.getElementById("madLibsForm").style.display = "block";
+        document.getElementById("sentence").style.display = "none";
+      }
+
+      document
+        .getElementById("madLibsForm")
+        .addEventListener("submit", generateSentence);
+
+        // const express = require('express')
+        // const logger = require('morgan')
+        // const path = require('path')
+        // const server = express()
+        // server.use(express.urlencoded({'extended': true}))
+        // server.use(logger('dev'))
+        // // Routes
+        // server.get('/do_a_random', (req, res) => {
+        //   res.send(`Your number is: ${Math.floor(Math.random() * 100) + 1}`)
+        // })
+        // // Setup static page serving for all the pages in "public"
+        // const publicServedFilesPath = path.join(__dirname, 'public')
+        // server.use(express.static(publicServedFilesPath))
+        // // The server uses port 80 by default unless you start it with the extra
+        // // command line argument 'local' like this:
+        // //       node server.js local
+        // let port = 80
+        // if (process.argv[2] === 'local') {
+        //   port = 8080
+        // }
+        // server.listen(port, () => console.log('Ready on localhost!'))
     </script>
-</body>
+    <footer>
+      <p>
+        Last updated:
+        <span id="lastModified"></span>
+      </p>
+    </footer>
+    <script type="text/javascript">
+      var x = document.lastModified;
+      document.getElementById("lastModified").textContent = x;
+    </script>
+  </body>
 </html>
